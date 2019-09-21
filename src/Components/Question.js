@@ -8,16 +8,20 @@ class Question extends Component{
             // See App.js for more details. loadRecipe is defined there.
             question: this.props.getQuestion(this.props.id)
         }
+    
     }
     render(){
         let title =" ";
         let listAnswers=" ";
 
-
         if (this.state.question) {
-            title = this.state.question.title
-            listAnswers = this.state.question.answers.map((answer, id) =>
-              <li key={id}>{answer}</li>
+            title = this.state.question.text
+            listAnswers = this.state.question.answers.map((answer,id) =>
+                <div key={answer.id} id={answer.id}>
+                   <div>Votes: {answer.votes}</div>
+                  <div>{answer.text}</div>
+                  <button onClick={(event)=> this.props.handleVote(event)}>Vote up</button>
+                </div>
             );
         }
         return(
@@ -27,7 +31,7 @@ class Question extends Component{
 
                 <div>
                     <h3>Answers</h3>
-                    <ol>{listAnswers}</ol>
+                    <div>{listAnswers}</div>
                 </div>
 
                 <Link to="/">Go back</Link>

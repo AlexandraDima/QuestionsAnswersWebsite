@@ -1,6 +1,7 @@
 import React from "react";
-import {render} from 'react-testing-library';
-import Questions from "./Questions";
+import {render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import Questions from "../Components/Questions";
 
 // Just some test data
 const data = [
@@ -40,6 +41,7 @@ it('renders Questions with all titles', () => {
     expect(getByText(data[1].text)).toBeInTheDocument();
     expect(getByText(data[2].text)).toBeInTheDocument();
 });
+
 
 // This is an example of testing for the absence of something.
 // The <Questions> component should render all questions, but not their answers.

@@ -1,6 +1,8 @@
 import React from 'react';
-import {render, fireEvent} from 'react-testing-library';
-import Question from './Question';
+import {render, fireEvent} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import Question from '../Components/Question';
+
 
 // Some test data for the tests.
 const question = {
@@ -13,6 +15,8 @@ const question = {
     ]
 };
 
+///Message of the render + function of testing
+
 it('renders Question data, including all answers', () => {
     const comp = <Question getQuestion={id => question}/>
     const {getByText, getByLabelText} = render(comp);
@@ -21,6 +25,7 @@ it('renders Question data, including all answers', () => {
     expect(getByText(question.answers[1].text)).toBeInTheDocument();
     expect(getByText(question.answers[2].text)).toBeInTheDocument();
 });
+
 
 it('calls "handleVote" when the voting button is clicked', () => {
     // This mock function doesn't really do anything other that

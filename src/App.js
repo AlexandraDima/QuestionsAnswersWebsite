@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import { Router } from "@reach/router";
 import Question from "./Components/Question";
 import Questions from "./Components/Questions";
-//import AskQuestion from "./Components/AskQuestion";
 //import PostQuestion from "./Components/PostQuestion";
 import Nav from "./Components/Nav";
 import Home from "./Components/Home";
+import AskQuestion from './Components/AskQuestion';
 
 
 class App extends Component {
@@ -19,46 +19,29 @@ class App extends Component {
       questions: [
         {
           id: 1,
-          title: "How do I return the response from an Observable in Angular 2?",
+          text: "How do I return the response from an Observable in Angular 2?",
           answers: [
-            "Observables are lazy so you have to subscribe to get the value.",
-            "You can use asyncPipe",
-            "The reason that it's undefined is that you are making an asynchronous operation"
+            {id: 0,text: "Answer 1", votes: 2},
+            {id: 1,text: "Answer 2", votes: 3},
+            {id: 2,text: "Answer 3", votes: 0}
           ]
         },
-        {/*
-         {
-          id: 2,
-          title: "I have another question. What is..?",
-          answers: [
-            {a: "Answer 1", votes: 2},
-            {a: "Answer 2", votes: 3},
-            {a: "Answer 3", votes: 0}
-          ]
-        },
+
         {
-          id: 3,
-          title: "What IS this??",
+          id: 2,
+          text: "How do I return the response from an Observable in Angular 2?",
           answers: [
-            {a: "Answer 1", votes: 0},
-            {a: "Answer 2", votes: 1}
+            {id: 0,text: "Answer 1", votes: 2},
+            {id: 1,text: "Answer 2", votes: 3},
+            {id: 2, text: "Answer 3", votes: 0}
           ]
         }
 
-
-
-         */},
-        {
-          id: 2,
-          title: "How do I return the response from an Observable in Angular 2?",
-          answers: [
-            "Observables are lazy so you have to subscribe to get the value.",
-            "You can use asyncPipe",
-            "The reason that it's undefined is that you are making an asynchronous operation"
-          ]
-        }
       ]
-    }
+    };
+
+     // This binding is necessary to make `this` work in the callback
+    this.handleVote = this.handleVote.bind(this);
   }
 
   //Function to get the question ID
@@ -68,6 +51,58 @@ class App extends Component {
 
     return this.state.questions.find(e => e.id === Number(id)); // And then return it
   }
+
+  //Function to vote the answers
+  handleVote = answerId => {
+    const updateVotes = this.state.questions.map(answer => {
+      if (answer.id === answerId) {
+        // use Object.assign() to create a new answer object with an updated votes property. 
+        return Object.assign({}, answer, {
+          votes: answer.votes + 1
+        });
+      } else {
+        return answer;
+      }
+    });
+
+    this.setState({
+      answers: updateVotes
+    });
+    console.log('The link was clicked.');
+  };
+
+    
+    //Function to ask new question
+  addQuestion(question) {
+    // This is the question object that will be saved to the list of questions
+    const questionObject = {
+        text: question
+    };
+
+    // A new state object with a new question is set
+    this.setState({
+        // The new todoList contains all the old items + the new taskObject (...spread syntax)
+        questions: [...this.state.questions, questionObject]
+    });
+}
+
+/* I can't save it
+  handleVote = (event) => {
+    console.log('The link was clicked.');
+    
+    this.setState(state => {
+      const votes= this.state.questions.map(votes => votes + 1);
+      return {
+        votes,
+      };
+    }); 
+ 
+    /*
+    this.setState({
+      votes: this.state.votes + 1,
+   
+    }); 
+  }*/
 
   render(){
     return (
@@ -81,15 +116,16 @@ class App extends Component {
           <Router>
 
             <Home path="/"></Home>
+            
             {/*
 
             Find the question id and return the path
             GetQuestion() function has to be called from inside the Question state component
              */}
-            <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} />
+            <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} handleVote={(event)=> this.handleVote(event)}/>
             <Questions path="/questions" questions={this.state.questions}></Questions>
 
-            {/*Add AskQuestion link and PostQuestion*/}
+            <AskQuestion  path="/askquestions" askQuestion={(question) => this.askQuestion(question)}/>
           </Router>
         </React.Fragment>
     );

@@ -6,8 +6,8 @@ class Nav extends Component {
         return(
             <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/Questions">Questions</Link></li>
-                <li><Link to="/AskQuestions">Ask Question</Link></li>
+                <li><Link to="/questions">Questions</Link></li>
+                <li><Link to="/askquestions">Ask Question</Link></li>
             </ul>
         );
     }
