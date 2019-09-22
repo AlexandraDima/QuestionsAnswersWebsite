@@ -29,6 +29,7 @@ class Question extends Component{
                 <div key={answer.id} id={answer.id}>
                    <div>Votes: {answer.votes}</div>
                   <div>{answer.text}</div>
+                  <button onClick={() => this.props.handleVote(this.props.id, answer.id)}>Vote up</button>
                   <button data-id={answer.id} onClick={this.handleVote}>Vote up</button>
                 </div>
             );
