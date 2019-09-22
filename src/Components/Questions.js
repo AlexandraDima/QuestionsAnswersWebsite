@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from "@reach/router";
 //import Question from './Question';
 import AskQuestion from "./AskQuestion";
