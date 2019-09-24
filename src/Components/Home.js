@@ -10,7 +10,7 @@ class Home extends Component {
                 <h1>Home</h1>
 
                 <ul>
-                    <li><Link to="/questions" getQuestion={(id) => this.getQuestion(id)}>Questions</Link></li>
+                    <li><Link to="/question/:id"></Link></li>
 
                 </ul>
             

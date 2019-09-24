@@ -8,8 +8,15 @@ class Question extends Component{
             // See App.js for more details. loadRecipe is defined there.
             question: this.props.getQuestion(this.props.id)
         }
-    
+        this.handleVote = this.handleVote.bind(this);
     }
+
+    handleVote(event) {
+        let answerId = event.currentTarget.dataset.id;
+        console.log(answerId);
+        this.props.handleVote(this.props.id, answerId);
+    }
+
     render(){
         let title =" ";
         let listAnswers=" ";
@@ -20,7 +27,8 @@ class Question extends Component{
                 <div key={answer.id} id={answer.id}>
                    <div>Votes: {answer.votes}</div>
                   <div>{answer.text}</div>
-                  <button onClick={(event)=> this.props.handleVote(event)}>Vote up</button>
+                  <button onClick={() => this.props.handleVote(this.props.id, answer.id)}>Vote up</button>
+                  <button data-id={answer.id} onClick={this.handleVote}>Vote up</button>
                 </div>
             );
         }

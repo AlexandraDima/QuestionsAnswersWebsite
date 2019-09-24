@@ -4,7 +4,7 @@ import Question from "./Components/Question";
 import Questions from "./Components/Questions";
 //import PostQuestion from "./Components/PostQuestion";
 import Nav from "./Components/Nav";
-import Home from "./Components/Home";
+//import Home from "./Components/Home";
 import AskQuestion from './Components/AskQuestion';
 
 
@@ -40,8 +40,6 @@ class App extends Component {
       ]
     };
 
-     // This binding is necessary to make `this` work in the callback
-    this.handleVote = this.handleVote.bind(this);
   }
 
   //Function to get the question ID
@@ -53,27 +51,29 @@ class App extends Component {
   }
 
   //Function to vote the answers
-  handleVote = answerId => {
-    const updateVotes = this.state.questions.map(answer => {
-      if (answer.id === answerId) {
-        // use Object.assign() to create a new answer object with an updated votes property. 
-        return Object.assign({}, answer, {
-          votes: answer.votes + 1
-        });
-      } else {
-        return answer;
-      }
-    });
-
-    this.setState({
-      answers: updateVotes
+  handleVote(questionId, answerId) {
+    this.setState(prevState => ({
+      questions: prevState.questions.map(question => 
+        question.id === Number(questionId) ? this.findAnswer(question, answerId) : question)
+    }), () => {
+     console.log(this.state);
     });
     console.log('The link was clicked.');
   };
 
+  findAnswer = (question, answerId) => {
+      question.answers = question.answers.map(answer => answer.id === Number(answerId) ? this.updateVote(answer) : answer);
+      return question;
+  }
+
+  updateVote = (answer) => {
+    answer.votes = answer.votes + 1;
+    return answer;
+  }
+
     
     //Function to ask new question
-  addQuestion(question) {
+  askQuestion(question) {
     // This is the question object that will be saved to the list of questions
     const questionObject = {
         text: question
@@ -115,7 +115,6 @@ class App extends Component {
 
           <Router>
 
-            <Home path="/"></Home>
             
             {/*
 
@@ -123,7 +122,8 @@ class App extends Component {
             GetQuestion() function has to be called from inside the Question state component
              */}
             <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} handleVote={(event)=> this.handleVote(event)}/>
-            <Questions path="/questions" questions={this.state.questions}></Questions>
+
+            <Questions path="/" questions={this.state.questions}></Questions>
 
             <AskQuestion  path="/askquestions" askQuestion={(question) => this.askQuestion(question)}/>
           </Router>
