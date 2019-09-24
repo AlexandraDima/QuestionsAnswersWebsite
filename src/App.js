@@ -7,6 +7,10 @@ import Nav from "./Components/Nav";
 //import Home from "./Components/Home";
 import AskQuestion from './Components/AskQuestion';
 
+const divStyle = {
+  color: 'blue',
+  border: '1px solid blue'
+};
 
 class App extends Component {
   //Initialize the state data of the recipes
@@ -121,8 +125,7 @@ class App extends Component {
             Find the question id and return the path
             GetQuestion() function has to be called from inside the Question state component
              */}
-            <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} handleVote={(event)=> this.handleVote(event)}/>
-
+            <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} handleVote={(questionId, answerId)=> this.handleVote(questionId, answerId)}/>
             <Questions path="/" questions={this.state.questions}></Questions>
 
             <AskQuestion  path="/askquestions" askQuestion={(question) => this.askQuestion(question)}/>
