@@ -25,7 +25,7 @@ class PostAnswer extends Component {
     onClick(event) {
         console.log(this.state.input);
         event.preventDefault(); 
-        this.props.postAnswer(this.state.input); // Add the question to the state of questions in App.js
+        this.props.postAnswer(this.props.qid, this.state.input); // Add the question to the state of questions in App.js
         // this.props.askQuestion is actually the arrow function in App.js (from the render method)
  
     }

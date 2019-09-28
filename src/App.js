@@ -77,7 +77,7 @@ class App extends Component {
     // This is the question object that will be saved to the list of questions
     const question = {
       //replace random method for the id
-        id: Math.random() * 100,
+        id: parseInt(Math.random() * 100) + 4,
         text: text,
         answers:[]
     };
@@ -87,20 +87,27 @@ class App extends Component {
         questions: [...this.state.questions, question]
     })
 }
-
+  insertAnswer(question , answer) {
+     question.answers.push(answer);
+     return question;    
+  }
   //Function to post new answer
-  postAnswer(text) {
+  postAnswer(questionId, text) {
+    debugger;
     // This is the question object that will be saved to the list of questions
     const answer = {
       //replace random method for the id
-        id: Math.random() * 10,
-        text: text
+        id: parseInt(Math.random() * 10),
+        text: text,
+        votes: 0
     };
     // A new state object with a new question is set
-   this.setState({
-        // The new answer list contains all the old items + the new answer object (...spread syntax)
-        answers: [...this.state.question.answers, answer]
-    })
+    this.setState(prevState => ({
+      questions: prevState.questions.map(question => 
+        question.id === Number(questionId) ? this.insertAnswer(question, answer) : question)
+    }), () => {
+     console.log(this.state);
+    });
 }
 
 
@@ -123,7 +130,7 @@ class App extends Component {
              */}
             <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} 
             handleVote={(questionId, answerId)=> this.handleVote(questionId, answerId)}
-             postAnswer={(text) => this.postAnswer(text)}
+             postAnswer={(questionId, text) => this.postAnswer(questionId,text)}
             />
             <Questions path="/" questions={this.state.questions}
             askQuestion={(text) => this.askQuestion(text)}></Questions>
