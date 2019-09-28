@@ -77,7 +77,11 @@ class App extends Component {
     // This is the question object that will be saved to the list of questions
     const question = {
       //replace random method for the id
+<<<<<<< HEAD
         id: parseInt(Math.random() * 100) + 4,
+=======
+        id: this.state.questions.length + 1,
+>>>>>>> c66c3afdcca0622118a6086aa03a6a5e121ea7a4
         text: text,
         answers:[]
     };
@@ -97,7 +101,11 @@ class App extends Component {
     // This is the question object that will be saved to the list of questions
     const answer = {
       //replace random method for the id
+<<<<<<< HEAD
         id: parseInt(Math.random() * 10),
+=======
+        id: this.state.questions[questionId - 1].answers.length + 1,
+>>>>>>> c66c3afdcca0622118a6086aa03a6a5e121ea7a4
         text: text,
         votes: 0
     };
