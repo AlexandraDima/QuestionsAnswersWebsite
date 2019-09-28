@@ -5,12 +5,8 @@ import Questions from "./Components/Questions";
 //import PostQuestion from "./Components/PostQuestion";
 import Nav from "./Components/Nav";
 //import Home from "./Components/Home";
-import AskQuestion from './Components/AskQuestion';
 
-const divStyle = {
-  color: 'blue',
-  border: '1px solid blue'
-};
+
 
 class App extends Component {
   //Initialize the state data of the recipes
@@ -42,8 +38,8 @@ class App extends Component {
         }
 
       ]
-    };
-
+    }
+  
   }
 
   //Function to get the question ID
@@ -77,36 +73,39 @@ class App extends Component {
 
     
     //Function to ask new question
-  askQuestion(question) {
+  askQuestion(text) {
     // This is the question object that will be saved to the list of questions
-    const questionObject = {
-        text: question
+    const question = {
+      //replace random method for the id
+        id: Math.random() * 100,
+        text: text,
+        answers:[]
     };
-
     // A new state object with a new question is set
     this.setState({
-        // The new todoList contains all the old items + the new taskObject (...spread syntax)
-        questions: [...this.state.questions, questionObject]
-    });
+        // The new questions list contains all the old items + the new question (...spread syntax)
+        questions: [...this.state.questions, question]
+    })
 }
 
-/* I can't save it
-  handleVote = (event) => {
-    console.log('The link was clicked.');
-    
-    this.setState(state => {
-      const votes= this.state.questions.map(votes => votes + 1);
-      return {
-        votes,
-      };
-    }); 
- 
-    /*
-    this.setState({
-      votes: this.state.votes + 1,
-   
-    }); 
-  }*/
+  //Function to post new answer
+  postAnswer(text) {
+    // This is the question object that will be saved to the list of questions
+    const answer = {
+      //replace random method for the id
+        id: Math.random() * 10,
+        text: text
+    };
+    // A new state object with a new question is set
+   this.setState({
+        // The new answer list contains all the old items + the new answer object (...spread syntax)
+        answers: [...this.state.question.answers, answer]
+    })
+}
+
+
+
+
 
   render(){
     return (
@@ -118,17 +117,17 @@ class App extends Component {
           <Nav />
 
           <Router>
-
-            
             {/*
-
             Find the question id and return the path
             GetQuestion() function has to be called from inside the Question state component
              */}
-            <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} handleVote={(questionId, answerId)=> this.handleVote(questionId, answerId)}/>
-            <Questions path="/" questions={this.state.questions}></Questions>
+            <Question path="/question/:id" getQuestion={(id) => this.getQuestion(id)} 
+            handleVote={(questionId, answerId)=> this.handleVote(questionId, answerId)}
+             postAnswer={(text) => this.postAnswer(text)}
+            />
+            <Questions path="/" questions={this.state.questions}
+            askQuestion={(text) => this.askQuestion(text)}></Questions>
 
-            <AskQuestion  path="/askquestions" askQuestion={(question) => this.askQuestion(question)}/>
           </Router>
         </React.Fragment>
     );

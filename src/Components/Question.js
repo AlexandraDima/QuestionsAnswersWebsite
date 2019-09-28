@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "@reach/router";
+import PostAnswer from "./PostAnswer";
 
 class Question extends Component{
     constructor(props){
@@ -13,11 +14,12 @@ class Question extends Component{
 
     handleVote(event) {
         let answerId = event.currentTarget.dataset.id;
-        console.log(answerId);
+        //console.log(answerId);
         this.props.handleVote(this.props.id, answerId);
     }
 
     render(){
+        
         let title =" ";
         let listAnswers=" ";
 
@@ -27,9 +29,11 @@ class Question extends Component{
                 <div key={answer.id} id={answer.id}>
                    <div>Votes: {answer.votes}</div>
                   <div>{answer.text}</div>
-                  <button onClick={() => this.props.handleVote(this.props.id, answer.id)}>Vote up</button>
                
+                  <button onClick={() => this.props.handleVote(this.props.id, answer.id)}>Vote up</button>              
+              
                 </div>
+                  
             );
         }
         return(
@@ -39,7 +43,12 @@ class Question extends Component{
 
                 <div>
                     <h3>Answers</h3>
-                    <div>{listAnswers}</div>
+                    <div>
+                 {listAnswers.length === 0 ? <p>No Answers!</p> : listAnswers}
+                 </div>
+                 <div>
+                    <PostAnswer postAnswer={(text) => this.props.postAnswer(text)}/>
+                    </div>
                 </div>
 
                 <Link to="/">Go back</Link>
