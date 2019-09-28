@@ -47,7 +47,7 @@ class Question extends Component{
                  {listAnswers.length === 0 ? <p>No Answers!</p> : listAnswers}
                  </div>
                  <div>
-                    <PostAnswer postAnswer={(text) => this.props.postAnswer(text)}/>
+                    <PostAnswer qid={this.props.id} postAnswer={(questionId, text) => this.props.postAnswer(questionId, text)}/>
                     </div>
                 </div>
 
